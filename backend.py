@@ -14,13 +14,13 @@ llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash",temperature=0.5)
 
 # state definition
 class chatState(TypedDict):
-    message : Annotated[list[BaseMessage], add_messages]
+    messages : Annotated[list[BaseMessage], add_messages]
 
 # node function
 def chat_model(state:chatState):
-    messages = state['message']
+    messages = state['messages']
     response = llm.invoke(messages)
-    return {'message': response}
+    return {'messages': [response]}
 
 # graph construction
 check = MemorySaver()
