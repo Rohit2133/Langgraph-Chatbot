@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st # type: ignore
 from backend import workflow
 from langchain_core.messages import HumanMessage , AIMessage # type: ignore
 import uuid
@@ -70,31 +70,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# # -----------------------------------
-# # Sidebar (UI only)
-# # -----------------------------------
-# with st.sidebar:
-#     st.markdown("### ⚙️ Controls")
-#     st.caption("Conversation memory is enabled.")
-#     if st.button("Clear Chat"):
-#         st.session_state.message_history = []
-#         st.rerun()
-#     if st.button("New Chat"):
-#         reset_chat()
-#     st.header("My Conversations :")
-#     for thread_id in st.session_state['chat_thread'][::-1]:
-#         if st.button(thread_id):
-#             st.session_state['thread_id'] = thread_id
-#             messages = load_conversation(thread_id)
-#             temp_history = []
-#             for msg in messages:
-#                 if isinstance(msg, HumanMessage):
-#                     role = 'user'
-#                 else:
-#                     role = 'assistant'
-#                 temp_history.append({"role": role, "content": msg.content})
-#             st.session_state['message_history'] = temp_history
-
 # -----------------------------------
 # Sidebar (UI only – active conversation names)
 # -----------------------------------
@@ -147,7 +122,9 @@ with st.sidebar:
 # -----------------------------------
 # Configuration for checkpointing
 # -----------------------------------
-CONFIG = {'configurable': {'thread_id': st.session_state['thread_id']}}
+CONFIG = {'configurable': {'thread_id': st.session_state['thread_id']},
+          'metadata' : {'thread_id' : st.session_state['thread_id']},
+          'run_name':'chat_turn'}
 
 
 # -----------------------------------
